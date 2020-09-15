@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz</title>
+    <link rel="stylesheet" href="css\style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div id="logo"> <img src="images\img_1.PNG"> <a href="#" id="logo_a">Upskilly</a>
+            </div>
+            <nav>
+                <a href="#">Take Test</a>
+                <a href="userpanel.html">User Panel</a>
+                <a href="index.html">Logout</a>
+            </nav>
+        </div>
+    </header>
+<div id="container">
+    <section class="banner-container">
+        <div class="container-test">
+            <div class="test-section">
+                <div id="subject">
+                    <span id="heads">Online Test</span><br><br>
+                    Subject:<label for="subjects">
+                       Technical Questions
+                    </label>
+                </div>
+                <div>
+                    <h3></h3>
+                    <div class="count">
+                      <div id="timer"></div>
+                    </div>
+                </div>
+                  <script >
+                    var h3 = document.getElementsByTagName("h3");
+                h3[0].innerHTML = "Time Duration :";
+               
+                var sec         = 1800,
+                    countDiv    = document.getElementById("timer"),
+                    secpass,
+                    countDown   = setInterval(function () {
+                        'use strict';
+                       
+                        secpass();
+                    }, 1000);
+               
+                function secpass() {
+                    'use strict';
+                   
+                    var min     = Math.floor(sec / 60),
+                        remSec  = sec % 60;
+                   
+                    if (remSec < 10) {
+                       
+                        remSec = '0' + remSec;
+                   
+                    }
+                    if (min < 10) {
+                       
+                        min = '0' + min;
+                   
+                    }
+                    countDiv.innerHTML = min + ":" + remSec+" "+"Min";
+                   
+                    if (sec > 0) {
+                       
+                        sec = sec - 1;
+                       
+                    } else {
+                       
+                        clearInterval(countDown);
+                       
+                        alert("Time Expired..");
+                        //countDiv.innerHTML = 'Time Expired..';
+                       
+                    }
+                }
+                </script>
+                <!--<div class="count" id="time">
+                   &nbsp:&nbsp;<label></label>
+                </div>-->
+                <form name="quizForm" onsubmit="return submitAnswers()">
+                    <div class="test-instruction-one">
+                       <div> Qn1. <label for="qc1"> Which tag allows you to put a scrolling text in a webpage?
+                            <br></label><br>
+                        <div class="main-option">
+                            <div class="sub-option1">
+                                <input type="radio" name="q1" value="a" id="q1a">
+                                <label for="q1a">a. table tag </label>&nbsp; </div>
+                            <div class="sub-option2">
+                                <input type="radio" name="q1" value="b" id="q1b">
+                                <label for="q1b">b.title tag </label>&nbsp;<br> </div>
+                            <div class="sub-option3">
+                                <input type="radio" name="q1" value="c" id="q1c">
+                                <label for="q1c">c.strong tag </label>&nbsp;&nbsp;</div>
+
+                            <div class="sub-option4"><input type="radio" name="q1" value="d" id="q1d">
+                                <label for="q1d">d.marquee</label>&nbsp;
+                            </div>
+                        </div>
+                        <br>
+                        <div> Qn2. <label for="qc2"> what are the type of a web storage in following options?
+                            <br></label><br>
+                        <div class="main-option">
+                            <div class="sub-option1">
+                                <input type="radio" name="q2" value="a" id="q2a">
+                                <label for="q2a">a. local and session. </label>&nbsp; </div>
+                            <div class="sub-option2">
+                                <input type="radio" name="q2" value="b" id="q2b">
+                                <label for="q2b">b.global storage </label>&nbsp;<br> </div>
+                            <div class="sub-option3">
+                                <input type="radio" name="q2" value="c" id="q2c">
+                                <label for="q2c">c.Class </label>&nbsp;&nbsp;</div>
+
+                            <div class="sub-option4"><input type="radio" name="q2" value="d" id="q2d">
+                                <label for="q2d">d.Container</label>&nbsp;
+                            </div>
+                        </div>
+                        <br>
+                        <div> Qn3. <label for="qc3">  HTML stands for?
+                            <br></label><br>
+                        <div class="main-option">
+                            <div class="sub-option1">
+                                <input type="radio" name="q3" value="a" id="q3a">
+                                <label for="q3a">a. Hyperttext Machine Language </label>&nbsp; </div>
+                            <div class="sub-option2">
+                                <input type="radio" name="q3" value="b" id="q3b">
+                                <label for="q3b">b.Hypertext Markup Language </label>&nbsp;<br> </div>
+                            <div class="sub-option3">
+                                <input type="radio" name="q3" value="c" id="q3c">
+                                <label for="q3c">c.Hybridtext mark level </label>&nbsp;&nbsp;</div>
+
+                            <div class="sub-option4"><input type="radio" name="q3" value="d" id="q3d">
+                                <label for="q3d">d.Hidetext markup language</label>&nbsp;
+                            </div>
+                        </div>
+                        <br>
+                        <div> Qn4. <label for="qc4"> Which tag allows you to list items in a webpage?
+                            <br></label><br>
+                        <div class="main-option">
+                            <div class="sub-option1">
+                                <input type="radio" name="q4" value="a" id="q4a">
+                                <label for="q4a">a. i tag </label>&nbsp; </div>
+                            <div class="sub-option2">
+                                <input type="radio" name="q4" value="b" id="q4b">
+                                <label for="q4b">b. b tag </label>&nbsp;<br> </div>
+                            <div class="sub-option3">
+                                <input type="radio" name="q4" value="c" id="q4c">
+                                <label for="q4c">c. h1 tag </label>&nbsp;&nbsp;</div>
+
+                            <div class="sub-option4"><input type="radio" name="q4" value="d" id="q4d">
+                                <label for="q4d">d. ul and li tag </label>&nbsp;
+                            </div>
+                        </div>
+                        <br>
+                        <div> Qn5. <label for="qc5"> Which tag allows you to provide border to an element in a webpage?
+                            <br></label><br>
+                        <div class="main-option">
+                            <div class="sub-option1">
+                                <input type="radio" name="q5" value="a" id="q5a">
+                                <label for="q5a">a. font-weight</label>&nbsp; </div>
+                            <div class="sub-option2">
+                                <input type="radio" name="q5" value="b" id="q5b">
+                                <label for="q5b">b. border tag </label>&nbsp;<br> </div>
+                            <div class="sub-option3">
+                                <input type="radio" name="q5" value="c" id="q5c">
+                                <label for="q5c">c. h1 tag </label>&nbsp;&nbsp;</div>
+
+                            <div class="sub-option4"><input type="radio" name="q5" value="d" id="q5d">
+                                <label for="q5d">d. font size </label>&nbsp;
+                            </div>
+                        </div>
+
+                        <!--<div class="btn-qn">
+                            <input type="submit" class="prev-qn-one" value="Previous">
+                            <input type="submit" class="refresh-qn-one" value="Refresh">
+                            <input type="submit" class="next-qn-one" value="Next">
+                        </div>-->
+                    </div>
+                    <button id="end-test">Submit Test</button>
+                </form>
+                <!--<button id="end-test">Submit Test</button>-->
+            </div>
+        </div>
+    </section>
+</div>
+    <center>
+        <div id="results" ></div>
+        <div id="report" style="visibility: hidden;">
+         
+        </div>
+    </center>
+     <script>
+        function submitAnswers(){
+           
+            var score = 0;
+           
+            var answers = ["d","a","b","d","b"];
+            var total =answers.length ;
+           
+            // Get User Input
+            var q1 = document.forms["quizForm"]["q1"].value;
+            var q2 = document.forms["quizForm"]["q2"].value;
+            var q3 = document.forms["quizForm"]["q3"].value;
+            var q4 = document.forms["quizForm"]["q4"].value;
+            var q5 = document.forms["quizForm"]["q5"].value;
+           
+            // Validation
+            for(i = 1; i <= total;i++){
+                if(eval('q'+i) == null || eval('q'+i) == ''){
+                    alert('You missed question '+ i);
+                    return false;
+                }
+            }
+           
+            // Set Correct Answers
+           
+           
+            // Check Answers
+            for(i = 1; i <= total;i++){
+                if(eval('q'+i) == answers[i - 1]){
+                    score++;
+                }
+            }
+            
+            // Display Results
+           
+            
+            var results = document.getElementById('results');
+           
+            results.innerHTML = '<h3>Your Score : <span>'+score+'</span></h3>';
+           
+            document.getElementById('container').innerHTML = "";
+            document.getElementById('container').style.visibility = 'hidden'; 
+            //document.getElementById('report').innerHTML = results.innerHTML;
+
+            document.getElementById('report').style.visibility = 'visible';
+            
+            return false;
+        }
+
+        </script>    
+</body>
+
+</html>

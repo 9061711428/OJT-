@@ -1,0 +1,216 @@
+Crud operations in nodeJS, expressJS and mongodb
+How to perform Crud operations in NodeJS, ExpressJS, and MongoDB. Simple NodeJs Crud application using NodeJS and MongoDB. Follow the below steps to create a simple crud app in NodeJS, ExpressJS, and MongoDB.
+
+Prerequisite:
+
+Node Must be Install In your Machine.
+CRUD is an acronym for Create, Read, Update, and Delete. It is a set of operations we get servers to execute (POST, GET, PUT and DELETE requests respectively). This is what each operation does.
+
+Create (post) – Create Something.
+Read(Get) – Update Something.
+Update(put) – Update Something.
+Delete(delete) – Destroy Something.
+In the MongoDB database, the following operations are carried out by the following functions for respective tasks.
+
+
+ 
+    Task	Function In MongoDB
+Create	.create()
+read	.find()
+Update	.update()
+Delete	.remove()
+Note: Get and Post requests are easily handled in node js but the put and delete are managed by the method-override library. Further, We will See.
+
+Libraries Used
+Body-parser
+Ejs
+Express
+Express-session
+Method-override
+Mongoose
+Nodemon
+Passport
+Passport-local
+Passport-local-mongoose
+Crud operations in nodeJS and MongoDB
+Step 1: Start Server and setup
+Initiate the server
+D:\work\Codebun\productKart>npm init
+Require express and use the app.
+And use listen to start the server.
+var express = require("express"),
+    app = express();
+app.listen(process.env.PORT || 5000,process.env.IP,function(err){
+    if(err){
+        console.log(err);
+    }else{ 
+    console.log("Server Started at 5000");
+   }
+})
+Step 2 Creating A Database and Schema
+Make a directory named as models and Create a product.js file inside it. Require mongoose in a variable set A schema And Export the Schema.
+const mongoose = require("mongoose");
+var productSchema = new mongoose.Schema({
+    name:String,
+    image:String,
+    price:Number
+})
+module.exports = mongoose.model("Product",productSchema);
+In the app.js file require Mongoose and connect to the database locally. And Requiring the created Schema and other libraries as well.
+ Set View Engine and use body-parser and method-override so that they can be used.
+Body-parser is used to require data from forms and currently loaded page.
+While method-override is used to rewrite the post request to put or delete as we have access to get and post only in embedded JavaScript.
+const express = require("express"),
+        app = express(),
+        bodyParser = require("body-parser"),
+        Product = require("./models/product"),
+        methodOverride = require("method-override");
+        mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost/CURD10");
+app.set("view engine","ejs");
+app.use(bodyParser.urlencoded({ extended:true }));
+app.use(methodOverride("_method"));
+Step 3: Creating an Index and Edit Page
+In view, directory creates a file index.ejs which is the index page for this app.
+Get the HTML set up and get a link to bootstrap(if using) or custom stylesheets.
+Set the for For adding the new Product in the upper Section and set input fields according to schema like name, image URL, price. (in this case)
+In the below section of the webpage set a table to display the data that comes from the database.
+Use the ejs syntax to use forEach loop to loop through each product of the database.
+Every product adds the button to delete and edit in the loop. So for each iteration, a button to edit and delete is created for the product.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CURD Operation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+    <section class="add">
+        <form action="/add" method="POST">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="productName">
+            <label for="image">Image</label>
+            <input type="text" id="image" name="image" placeholder="Image-URL">
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" placeholder="productPrice">
+            <input type="submit">
+        </form>
+    </section>
+    <br>
+    <br>
+    <hr>
+    <section class="show">
+        <table class="table">
+            <tr>
+            <th>Name</th>
+            <th>image`</th>
+            <th>price</th>
+        </tr>
+        <% products.forEach(function(product){ %>
+            <tr> <td> <h4><%= product.name %></h4> </td>    
+            <td><img src="<%= product.image %>" alt="" style="width: 100px;height: 100px;"> </td>
+            <td><h5><%=product.price%></h5></td>
+            <td><a class="btn btn-warning" href="/<%=product._id%>/edit">EDIT </a></td>
+            <td><form action="/<%=product._id%>/?_method=DELETE" method="POST"><button class="btn btn-danger">Delete</button></form></td>
+            </tr>
+        <% }) %>
+    </table>
+    </section>
+    
+</body>
+</html>
+Link To edit button brings to the edit-form page to edit any value in the existing products.
+This form send a put request which is achieved by method-override.
+This target id with a particular product that is associated with the edit button on that product that id is extracted using params.
+<h1>Edit <%=product.name%></h1>
+<form action="/<%=product._id%>/edit?_method=PUT" method="POST">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="product[name]" value="<%=product.name%>">
+        <label for="image">Image</label>
+        <input type="text" id="image" name="product[image]" value="<%=product.image%>">
+        <label for="price">Price</label>
+        <input type="number" id="price" name="product[price]" value="<%=product.price%>">
+        <input type="submit">
+</form>
+<a href="/">GOBACK-></a>
+Step 4: Creating Routes for CRUD
+GET route to show the index page and all the products we use Product.find() function to pass it on the index page. (READ)
+Post route to add the product to the database using Product.create() and render the index page again with a new product. (Create)
+Get the edit form with a particular id passed and the form render the pre-existing data we can edit it and send a PUT request using method-override again to update the information of product using Product.findByIdAndUpdate() and rendering the index page with newly updated data.
+Delete route is called when a delete button of that product is clicked. The requests for deleting data using method-override and Data are removed using Product.findByIdAndRemove() and redirected to the index page with the data deleted.
+const express = require("express"),
+        app = express(),
+        bodyParser = require("body-parser"),
+        Product = require("./models/product"),
+        methodOverride = require("method-override");
+        mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost/CURD10");
+app.set("view engine","ejs");
+app.use(bodyParser.urlencoded({ extended:true }));
+app.use(methodOverride("_method"));
+//Show product and homepage
+app.get("/",(req, res)=>{
+    Product.find({},(err,products)=>{
+        if (err) {console.log(err);
+        }else{
+            res.render("index",{products: products});
+        }
+    })
+    
+})
+//add Product
+app.post("/add",(req,res)=>{
+    var name = req.body.name;
+    var image = req.body.image;
+    var price = req.body.price;
+    var newProduct = {name:name,image:image,price:price};
+    Product.create(newProduct,(err,data)=>{
+        if(err){
+            console.log(err);
+        }else {
+            console.log(data);
+            res.redirect("/");
+        }
+    })
+})
+//Get EditForm
+app.get("/:id/edit",(req,res)=>{
+    Product.findById(req.params.id,function (err, product){
+        if(err){
+            console.log(err);
+            res.redirect("/");
+        }else{
+            res.render("edit",{product: product});
+        }
+    })
+})
+//Edit Put request
+app.put("/:id/edit",(req, res)=>{
+    Product.findByIdAndUpdate(req.params.id,req.body.product,function(err,updatedata){
+        if(err){
+            console.log(err);
+            res.redirect("/");
+        }else{
+            res.redirect("/");
+        }
+    })
+})
+//Delete the product
+app.delete("/:id",(req,res)=>{
+    Product.findByIdAndRemove(req.params.id,function (err){
+        if(err){
+            console.log(err);
+            res.redirect("/");
+        }else {
+            res.redirect("/");
+            }
+    })
+})
+app.listen(2000,(err)=>{
+    if(err){
+        console.log(err);
+    }else {
+        console.log("Server Started At PORT 2000");
+    }
+})

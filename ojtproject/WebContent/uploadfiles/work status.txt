@@ -1,0 +1,17 @@
+
+Work Status: Cloud City
+
+1.About : This system is developed to 
+automate day to day activity of a restaurant. 
+
+2.Collabrate in the project Cloud City(July 4).
+	Clone Cloud City project & learned more about project requirements.
+3.Installed all required Software tools in my system.
+(ie,git version controller,Mongodb,Visual code editor etc.) (july 5)
+4.Started design using AdminLTE. And learned more about Handle bars.
+Designed login page using AdminLTE.(july-6).
+5.Create GET route for modules in project.(july 7).
+6.Hit on each modules,it shows it's corresponding login pages.(july 8).
+7.Create POST route for login page and set name attribute for each input fields.(july-9).
+set form action,Create function call authChecker etc.
+

@@ -1,0 +1,14 @@
+C:\Users\sudheesh\eclipse-workspace\ojtproject
+https://www.chillyfacts.com/java-jsp-file-upload-example/
+
+  <%
+              	//String subqn_id=request.getParameter("subqn_id");
+				String filename=request.getParameter("filename");
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection con=null;
+				con=DriverManager.getConnection("jdbc:mysql://localhost:3306/ojt-database","root","");
+				Statement stn=con.createStatement();
+				String str1="INSERT INTO question_tbl VALUES('"+filename+"')";
+				stn.execute(str1);
+				response.sendRedirect("adminpanel.html");
+				%>  

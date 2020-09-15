@@ -1,0 +1,8 @@
+DSR Training
+
+Date:27-06-2020
+Status:
+DOM manipulation in js,CSS Manipulation,
+what is react,overview)
+Regards 
+Subimol chacko
